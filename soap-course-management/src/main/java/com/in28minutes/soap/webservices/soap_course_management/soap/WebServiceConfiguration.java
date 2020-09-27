@@ -28,6 +28,7 @@ public class WebServiceConfiguration {
 		return new SimpleXsdSchema(new ClassPathResource("course-details.xsd"));
 	}
 	
+	@Bean(name = "courses")
 	public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema coursesSchema) {
 		DefaultWsdl11Definition definition = new DefaultWsdl11Definition();
 		definition.setPortTypeName("CoursePort");
