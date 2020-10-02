@@ -17,6 +17,7 @@ import com.in28minutes.courses.GetAllCoursesDetailsResponse;
 import com.in28minutes.courses.GetCourseDetailsRequest;
 import com.in28minutes.courses.GetCourseDetailsResponse;
 import com.in28minutes.soap.webservices.soap_course_management.soap.bean.Course;
+import com.in28minutes.soap.webservices.soap_course_management.soap.exception.CourseNotFoundException;
 import com.in28minutes.soap.webservices.soap_course_management.soap.service.CourseDetailsService;
 import com.in28minutes.soap.webservices.soap_course_management.soap.service.CourseDetailsService.Status;
 
@@ -31,6 +32,9 @@ public class CourseDetailsEndpoint {
 	@ResponsePayload
 	public GetCourseDetailsResponse processCourseDetailsRequest(@RequestPayload GetCourseDetailsRequest courseDetailsRequest) {
 		Course course = courseDetailsService.findById(courseDetailsRequest.getId());
+		if(course == null) {
+			throw new CourseNotFoundException("Course does not exist id: " + courseDetailsRequest.getId());
+		}
 		GetCourseDetailsResponse courseDetailsResponse = new GetCourseDetailsResponse();
 		courseDetailsResponse.setCourseDetails(mapCourse(course));
 		return courseDetailsResponse;

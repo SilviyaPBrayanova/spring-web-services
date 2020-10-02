@@ -33,7 +33,7 @@ public class CourseDetailsService {
 
 	public Course findById(int id) {
 		Optional<Course> findFirst = courses.stream().filter(course -> course.getId() == id).findFirst();
-		return findFirst.get();
+		return findFirst.orElse(null);
 	}
 	
 	public List<Course> findAll(){
